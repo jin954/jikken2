@@ -1,44 +1,57 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock and Pomodoro Timer</title>
+    <title>Clock and Timer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="clock" class="active">
         <div id="date"></div>
         <div id="time"></div>
+        <button id="clock-settings" class="settings-button">&#9881;</button>
     </div>
 
     <div id="pomodoro">
         <div class="buttons">
-            <button id="pomodoro-mode" class="active">Pomodoro</button>
-            <button id="short-break-mode">Short Break</button>
-            <button id="long-break-mode">Long Break</button>
+            <button id="pomodoroMode">Pomodoro</button>
+            <button id="shortBreakMode">Short Break</button>
+            <button id="longBreakMode">Long Break</button>
         </div>
         <div id="timer">25:00</div>
         <div class="pomodoro-controls">
-            <button id="start-pomodoro">Start</button>
-            <button id="reset-pomodoro">🔄</button>
-            <button id="open-settings">⚙️</button>
+            <button id="startTimer">Start</button>
+            <button id="resetTimer">&#8635;</button>
+            <button id="pomodoro-settings" class="settings-button">&#9881;</button>
         </div>
-        <div id="settings" style="display: none;">
-            <label>Pomodoro: <input type="number" id="pomodoro-minutes" value="25" min="1" max="60"> 分</label>
-            <label>Short Break: <input type="number" id="short-break-minutes" value="5" min="1" max="30"> 分</label>
-            <label>Long Break: <input type="number" id="long-break-minutes" value="15" min="1" max="60"> 分</label>
-            <button id="set-pomodoro">設定</button>
+    </div>
+
+    <div id="countdown">
+        <div id="countdownDisplay">00日00時間00分00秒</div>
+        <div class="pomodoro-controls">
+            <button id="startCountdown">Start</button>
+            <button id="resetCountdown">&#8635;</button>
+            <button id="countdown-settings" class="settings-button">&#9881;</button>
         </div>
     </div>
 
     <div class="switch">
-        <label>
-            <input type="radio" name="mode" value="clock" checked> 時計
-        </label>
-        <label>
-            <input type="radio" name="mode" value="pomodoro"> ポモドーロ
-        </label>
+        <label><input type="radio" name="mode" value="clock" checked> 時計</label>
+        <label><input type="radio" name="mode" value="pomodoro"> ポモドーロ</label>
+        <label><input type="radio" name="mode" value="countdown"> CD</label>
+    </div>
+
+    <div id="clock-settings-panel" class="settings-panel" style="display:none;">
+        <!-- Clock settings panel content -->
+    </div>
+
+    <div id="pomodoro-settings-panel" class="settings-panel" style="display:none;">
+        <!-- Pomodoro settings panel content -->
+    </div>
+
+    <div id="countdown-settings-panel" class="settings-panel" style="display:none;">
+        <!-- Countdown settings panel content -->
     </div>
 
     <script src="script.js"></script>
