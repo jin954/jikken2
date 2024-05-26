@@ -11,11 +11,11 @@ body {
 }
 
 #date {
-    font-size: 0.8em; /* 日付のフォントサイズをほんの少し大きく */
+    font-size: 0.6em; /* 日付のフォントサイズをほんの少し小さく */
 }
 
 #time {
-    font-size: 3em;
+    font-size: 2.5em; /* 時間のフォントサイズを少し小さく */
     letter-spacing: -0.03em; /* 数字とコロンの間隔をほんの少し広く */
 }
 
@@ -36,6 +36,10 @@ body {
     margin-right: 10px;
 }
 
+#pomodoro {
+    transform: scale(0.8); /* 全体を縮小 */
+}
+
 #pomodoro .buttons {
     display: flex;
     justify-content: center;
@@ -43,13 +47,14 @@ body {
 }
 
 #pomodoro .buttons button {
-    margin: 0 10px;
-    padding: 10px 20px;
+    margin: 0 5px;
+    padding: 5px 15px; /* ボタンを小さく */
     border: none;
     border-radius: 25px;
     background: white;
     color: #1a1a2e;
     cursor: pointer;
+    font-size: 0.8em; /* ボタンテキストのフォントサイズを小さく */
 }
 
 #pomodoro .buttons button.active {
@@ -58,29 +63,29 @@ body {
 }
 
 #timer {
-    font-size: 5em;
-    margin: 20px 0;
+    font-size: 3em; /* タイマーのフォントサイズを小さく */
+    margin: 10px 0; /* 上下の余白を小さく */
 }
 
 .pomodoro-controls {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .pomodoro-controls button {
-    margin: 0 10px;
-    padding: 10px 20px;
+    margin: 0 5px;
+    padding: 5px 10px; /* コントロールボタンを小さく */
     border: none;
     border-radius: 25px;
     background: white;
     color: #1a1a2e;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1em; /* ボタンテキストのフォントサイズを小さく */
 }
 
 #open-settings {
-    font-size: 1.5em; /* 歯車マークを大きくする */
+    font-size: 1.5em; /* 歯車マークの大きさはそのまま */
     background: none;
     border: none;
     cursor: pointer;
