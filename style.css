@@ -10,34 +10,9 @@ body {
     color: white;
 }
 
-#date {
-    font-size: 0.6em; /* 日付のフォントサイズをほんの少し小さく */
-}
-
-#time {
-    font-size: 2.5em; /* 時間のフォントサイズを少し小さく */
-    letter-spacing: -0.03em; /* 数字とコロンの間隔をほんの少し広く */
-}
-
-#clock, #pomodoro {
-    text-align: center;
-    display: none;
-}
-
-#clock.active, #pomodoro.active {
-    display: block;
-}
-
-.switch {
-    margin-top: 20px;
-}
-
-.switch label {
-    margin-right: 10px;
-}
-
 #pomodoro {
-    transform: scale(0.8); /* 全体を縮小 */
+    text-align: center;
+    transform: scale(0.8);
 }
 
 #pomodoro .buttons {
@@ -48,23 +23,23 @@ body {
 
 #pomodoro .buttons button {
     margin: 0 5px;
-    padding: 5px 15px; /* ボタンを小さく */
+    padding: 5px 15px;
     border: none;
     border-radius: 25px;
-    background: white;
-    color: #1a1a2e;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
     cursor: pointer;
-    font-size: 0.8em; /* ボタンテキストのフォントサイズを小さく */
+    font-size: 1em;
 }
 
 #pomodoro .buttons button.active {
-    background: #e94560;
-    color: white;
+    background: white;
+    color: #1a1a2e;
 }
 
 #timer {
-    font-size: 3em; /* タイマーのフォントサイズを小さく */
-    margin: 10px 0; /* 上下の余白を小さく */
+    font-size: 6em;
+    margin: 20px 0;
 }
 
 .pomodoro-controls {
@@ -73,34 +48,74 @@ body {
     margin-bottom: 10px;
 }
 
-.pomodoro-controls button {
+.pomodoro-controls .icon-button {
     margin: 0 5px;
-    padding: 5px 10px; /* コントロールボタンを小さく */
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    color: #1a1a2e;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pomodoro-controls .start-button {
+    margin: 0 5px;
+    padding: 5px 30px;
     border: none;
     border-radius: 25px;
     background: white;
     color: #1a1a2e;
     cursor: pointer;
-    font-size: 1em; /* ボタンテキストのフォントサイズを小さく */
+    font-size: 1.5em;  /* フォントサイズを大きく */
+    font-weight: bold; /* フォントを太く */
 }
 
 #open-settings {
-    font-size: 1.5em; /* 歯車マークの大きさはそのまま */
+    font-size: 1.5em;
     background: none;
     border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    background: white;
+    color: #1a1a2e;
     cursor: pointer;
 }
 
 #settings {
     margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #1a1a2e;
+    
 }
 
 #settings label {
     display: block;
     margin: 10px 0;
-    color: white;
 }
 
 #settings input {
     width: 50px;
+    padding: 5px;
+    border: 1px solid #1a1a2e;
+    border-radius: 5px;
+}
+
+#settings button {
+    margin-top: 10px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 25px;
+    background: #1a1a2e;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
 }
