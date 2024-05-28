@@ -3,15 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock and Pomodoro Timer</title>
+    <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="clock" class="active">
-        <div id="date"></div>
-        <div id="time"></div>
-    </div>
-
     <div id="pomodoro">
         <div class="buttons">
             <button id="pomodoro-mode" class="active">Pomodoro</button>
@@ -20,9 +15,9 @@
         </div>
         <div id="timer">25:00</div>
         <div class="pomodoro-controls">
-            <button id="start-pomodoro">Start</button>
-            <button id="reset-pomodoro">🔄</button>
-            <button id="open-settings">⚙️</button>
+            <button id="start-pomodoro" class="start-button">Start</button>
+            <button id="reset-pomodoro" class="icon-button">🔄</button>
+            <button id="open-settings" class="icon-button">⚙️</button>
         </div>
         <div id="settings" style="display: none;">
             <label>Pomodoro: <input type="number" id="pomodoro-minutes" value="25" min="1" max="60"> 分</label>
@@ -30,15 +25,6 @@
             <label>Long Break: <input type="number" id="long-break-minutes" value="15" min="1" max="60"> 分</label>
             <button id="set-pomodoro">設定</button>
         </div>
-    </div>
-
-    <div class="switch">
-        <label>
-            <input type="radio" name="mode" value="clock" checked> 時計
-        </label>
-        <label>
-            <input type="radio" name="mode" value="pomodoro"> ポモドーロ
-        </label>
     </div>
 
     <script src="script.js"></script>
