@@ -20,14 +20,17 @@
             <button id="open-settings" class="icon-button">⚙️</button>
         </div>
         <div id="settings" style="display: none;">
+            <div id="color-select">
+                <label>色選択：</label>
+                <select id="select-color">
+                    <option value="#6633FF">A</option>
+                    <option value="#FFFFFF">B</option>
+                    <option value="#000000">C</option>
+                </select>
+            </div>
             <label>Pomodoro: <input type="number" id="pomodoro-minutes" value="25" min="1" max="60"> 分</label>
             <label>Short Break: <input type="number" id="short-break-minutes" value="5" min="1" max="30"> 分</label>
             <label>Long Break: <input type="number" id="long-break-minutes" value="15" min="1" max="60"> 分</label>
-            <select id="background-color-select">
-                <option value="#6633FF">Color A</option>
-                <option value="#FFFFFF">Color B</option>
-                <option value="#000000">Color C</option>
-            </select>
             <button id="set-pomodoro">閉じる</button>
         </div>
     </div>
