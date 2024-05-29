@@ -55,13 +55,13 @@ body {
     margin-bottom: 10px;
 }
 
-.pomodoro-controls .icon-button {
+.pomodoro-controls .icon-button,
+.pomodoro-controls .start-button,
+#open-settings {
     margin: 0 5px;
     padding: 0;
-    width: 50px;
-    height: 50px;
     border: none;
-    border-radius: 50%;
+    border-radius: 25px;
     background: white;
     color: #1a1a2e;
     cursor: pointer;
@@ -73,28 +73,9 @@ body {
 }
 
 .pomodoro-controls .start-button {
-    margin: 0 5px;
     padding: 5px 30px;
-    border: none;
-    border-radius: 25px;
-    background: white;
-    color: #1a1a2e;
-    cursor: pointer;
     font-size: 1.5em;
     font-weight: bold;
-    box-shadow: 0 0 2px 1px black;
-}
-
-#open-settings {
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 25px;
-    background: white;
-    color: #1a1a2e;
-    cursor: pointer;
-    box-shadow: 0 0 2px 1px black;
 }
 
 #settings {
