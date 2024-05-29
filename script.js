@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const pomodoroMinutesInput = document.getElementById('pomodoro-minutes');
     const shortBreakMinutesInput = document.getElementById('short-break-minutes');
     const longBreakMinutesInput = document.getElementById('long-break-minutes');
+    const colorAButton = document.getElementById('color-A');
+    const colorBButton = document.getElementById('color-B');
+    const colorCButton = document.getElementById('color-C');
 
     let interval;
     let timerRunning = false;
@@ -21,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
     resetButton.addEventListener('click', resetPomodoro);
     settingsButton.addEventListener('click', toggleSettings);
     setPomodoroButton.addEventListener('click', setPomodoroSettings);
+    colorAButton.addEventListener('click', () => setBackgroundColor('#6633FF'));
+    colorBButton.addEventListener('click', () => setBackgroundColor('#FFFFFF'));
+    colorCButton.addEventListener('click', () => setBackgroundColor('#000000'));
     pomodoroModeButton.addEventListener('click', () => setMode('pomodoro'));
     shortBreakModeButton.addEventListener('click', () => setMode('short-break'));
     longBreakModeButton.addEventListener('click', () => setMode('long-break'));
@@ -124,5 +130,9 @@ document.addEventListener('DOMContentLoaded', function () {
             timerRunning = false;
             // ここにタイマー終了時の処理を追加することができます
         }
+    }
+
+    function setBackgroundColor(color) {
+        document.body.style.background = color;
     }
 });
