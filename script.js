@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const pomodoroMinutesInput = document.getElementById('pomodoro-minutes');
     const shortBreakMinutesInput = document.getElementById('short-break-minutes');
     const longBreakMinutesInput = document.getElementById('long-break-minutes');
-    const colorSelect = document.getElementById('select-color');
+    const backgroundColorSelect = document.getElementById('background-color');
 
     let interval;
     let timerRunning = false;
@@ -25,10 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     pomodoroModeButton.addEventListener('click', () => setMode('pomodoro'));
     shortBreakModeButton.addEventListener('click', () => setMode('short-break'));
     longBreakModeButton.addEventListener('click', () => setMode('long-break'));
-
-    colorSelect.addEventListener('change', function () {
-        document.body.style.backgroundColor = this.value;
-    });
 
     function startPomodoro() {
         if (!timerRunning) {
@@ -70,21 +66,25 @@ document.addEventListener('DOMContentLoaded', function () {
     function toggleSettings() {
         const settings = document.getElementById('settings');
         settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
-        setPomodoroButton.textContent = settings.style.display === 'none' ? '閉じる' : '設定';
     }
 
     function setPomodoroSettings() {
         const pomodoroMinutes = pomodoroMinutesInput.value;
         const shortBreakMinutes = shortBreakMinutesInput.value;
         const longBreakMinutes = longBreakMinutesInput.value;
+        const backgroundColor = backgroundColorSelect.value;
 
         // Save settings to localStorage
         localStorage.setItem('pomodoroMinutes', pomodoroMinutes);
         localStorage.setItem('shortBreakMinutes', shortBreakMinutes);
         localStorage.setItem('longBreakMinutes', longBreakMinutes);
+        localStorage.setItem('backgroundColor', backgroundColor);
 
         // Update the timer display with new settings
         document.getElementById('timer').textContent = `${pomodoroMinutes}:00`;
+
+        // Update the background color
+        document.body.style.backgroundColor = backgroundColor;
 
         toggleSettings();
     }
@@ -93,13 +93,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const pomodoroMinutes = localStorage.getItem('pomodoroMinutes') || 25;
         const shortBreakMinutes = localStorage.getItem('shortBreakMinutes') || 5;
         const longBreakMinutes = localStorage.getItem('longBreakMinutes') || 15;
+        const backgroundColor = localStorage.getItem('backgroundColor') || '#1a1a2e';
 
         pomodoroMinutesInput.value = pomodoroMinutes;
         shortBreakMinutesInput.value = shortBreakMinutes;
         longBreakMinutesInput.value = longBreakMinutes;
+        backgroundColorSelect.value = backgroundColor;
 
         // Set the timer display to the loaded pomodoro time
         document.getElementById('timer').textContent = `${pomodoroMinutes}:00`;
+
+        // Set the background color
+        document.body.style.backgroundColor = backgroundColor;
     }
 
     function setMode(mode) {
