@@ -1,139 +1,129 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const startButton = document.getElementById('start-pomodoro');
-    const resetButton = document.getElementById('reset-pomodoro');
-    const settingsButton = document.getElementById('open-settings');
-    const setPomodoroButton = document.getElementById('set-pomodoro');
-    const pomodoroModeButton = document.getElementById('pomodoro-mode');
-    const shortBreakModeButton = document.getElementById('short-break-mode');
-    const longBreakModeButton = document.getElementById('long-break-mode');
-    const pomodoroMinutesInput = document.getElementById('pomodoro-minutes');
-    const shortBreakMinutesInput = document.getElementById('short-break-minutes');
-    const longBreakMinutesInput = document.getElementById('long-break-minutes');
-    const backgroundColorSelect = document.getElementById('background-color');
+let images = JSON.parse(localStorage.getItem("images")) || [];
+let currentIndex = 0;
+let displayTime = (localStorage.getItem("displayTime") || 0) * 60 * 1000; 
+let timer;
 
-    let interval;
-    let timerRunning = false;
-    let remainingTime = 0;
+// 初期設定の画像
+const defaultImage = "default_image.png"; 
 
-    // Load settings from localStorage
-    loadSettings();
+// 画像をロードする
+function loadImage(index) {
+    if (images.length > 0) {
+        document.getElementById("currentImage").src = images[index].url;
+    } else {
+        document.getElementById("currentImage").src = defaultImage; // 初期画像
+    }
+}
 
-    startButton.addEventListener('click', startPomodoro);
-    resetButton.addEventListener('click', resetPomodoro);
-    settingsButton.addEventListener('click', toggleSettings);
-    setPomodoroButton.addEventListener('click', setPomodoroSettings);
-    pomodoroModeButton.addEventListener('click', () => setMode('pomodoro'));
-    shortBreakModeButton.addEventListener('click', () => setMode('short-break'));
-    longBreakModeButton.addEventListener('click', () => setMode('long-break'));
+// 次の画像へ
+function nextImage() {
+    currentIndex = (currentIndex + 1) % (images.length || 1);
+    loadImage(currentIndex);
+    resetTimer();
+}
 
-    function startPomodoro() {
-        if (!timerRunning) {
-            timerRunning = true;
-            const currentMode = document.querySelector('.buttons button.active').id;
-            let minutes;
+// 前の画像へ
+function prevImage() {
+    currentIndex = (currentIndex - 1 + (images.length || 1)) % (images.length || 1);
+    loadImage(currentIndex);
+    resetTimer();
+}
 
-            if (currentMode === 'pomodoro-mode') {
-                minutes = parseInt(pomodoroMinutesInput.value);
-            } else if (currentMode === 'short-break-mode') {
-                minutes = parseInt(shortBreakMinutesInput.value);
-            } else if (currentMode === 'long-break-mode') {
-                minutes = parseInt(longBreakMinutesInput.value);
+// タイマーを開始
+function startTimer() {
+    timer = setTimeout(nextImage, displayTime);
+}
+
+// タイマーをリセット
+function resetTimer() {
+    clearTimeout(timer);
+    startTimer();
+}
+
+// 設定モーダルを開く
+function openSettings() {
+    document.getElementById("settingsModal").style.display = "block";
+    updateImageList();
+}
+
+// 設定モーダルを閉じる
+function closeSettings() {
+    document.getElementById("settingsModal").style.display = "none";
+}
+
+// 画像リストを更新する
+function updateImageList() {
+    const imageList = document.getElementById("imageList");
+    imageList.innerHTML = ""; 
+    images.forEach((image, index) => {
+        const div = document.createElement("div");
+        div.className = "image-item";
+        div.innerHTML = `画像${index + 1}: ${image.name}
+            <button onclick="moveImageUp(${index})">↑</button>
+            <button onclick="moveImageDown(${index})">↓</button>
+            <button onclick="deleteImage(${index})">削除</button>`;
+        imageList.appendChild(div);
+    });
+}
+
+// 画像を削除する
+function deleteImage(index) {
+    images.splice(index, 1);
+    localStorage.setItem("images", JSON.stringify(images));
+    updateImageList();
+    if (currentIndex >= images.length) {
+        currentIndex = 0;
+    }
+    loadImage(currentIndex);
+}
+
+// 画像を上に移動する
+function moveImageUp(index) {
+    if (index > 0) {
+        [images[index - 1], images[index]] = [images[index], images[index - 1]];
+        localStorage.setItem("images", JSON.stringify(images));
+        updateImageList();
+        loadImage(currentIndex);
+    }
+}
+
+// 画像を下に移動する
+function moveImageDown(index) {
+    if (index < images.length - 1) {
+        [images[index + 1], images[index]] = [images[index], images[index + 1]];
+        localStorage.setItem("images", JSON.stringify(images));
+        updateImageList();
+        loadImage(currentIndex);
+    }
+}
+
+// 設定を保存
+function saveSettings() {
+    const hours = document.getElementById("displayHours").value;
+    const minutes = document.getElementById("displayMinutes").value;
+    displayTime = (parseInt(hours) * 60 + parseInt(minutes)) * 60 * 1000;
+    localStorage.setItem("displayTime", (parseInt(hours) * 60 + parseInt(minutes)));
+    resetTimer();
+}
+
+// 画像をアップロードして保存
+function saveImages() {
+    const uploadInput = document.getElementById("uploadImage");
+    if (uploadInput.files.length > 0) {
+        for (const file of uploadInput.files) {
+            const url = URL.createObjectURL(file);
+            if (images.length < 30) {
+                images.push({url: url, name: file.name});
+                localStorage.setItem("images", JSON.stringify(images));
+            } else {
+                alert("画像の最大登録数は30枚です。");
+                break;
             }
-
-            remainingTime = minutes * 60;
-            interval = setInterval(updateTimer, 1000);
         }
     }
+    updateImageList();
+}
 
-    function resetPomodoro() {
-        clearInterval(interval);
-        timerRunning = false;
-        remainingTime = 0;
-        const currentMode = document.querySelector('.buttons button.active').id;
-        let minutes;
-
-        if (currentMode === 'pomodoro-mode') {
-            minutes = parseInt(pomodoroMinutesInput.value);
-        } else if (currentMode === 'short-break-mode') {
-            minutes = parseInt(shortBreakMinutesInput.value);
-        } else if (currentMode === 'long-break-mode') {
-            minutes = parseInt(longBreakMinutesInput.value);
-        }
-
-        document.getElementById('timer').textContent = `${minutes}:00`;
-    }
-
-    function toggleSettings() {
-        const settings = document.getElementById('settings');
-        settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function setPomodoroSettings() {
-        const pomodoroMinutes = pomodoroMinutesInput.value;
-        const shortBreakMinutes = shortBreakMinutesInput.value;
-        const longBreakMinutes = longBreakMinutesInput.value;
-        const backgroundColor = backgroundColorSelect.value;
-
-        // Save settings to localStorage
-        localStorage.setItem('pomodoroMinutes', pomodoroMinutes);
-        localStorage.setItem('shortBreakMinutes', shortBreakMinutes);
-        localStorage.setItem('longBreakMinutes', longBreakMinutes);
-        localStorage.setItem('backgroundColor', backgroundColor);
-
-        // Update the timer display with new settings
-        document.getElementById('timer').textContent = `${pomodoroMinutes}:00`;
-
-        // Update the background color
-        document.body.style.backgroundColor = backgroundColor;
-
-        toggleSettings();
-    }
-
-    function loadSettings() {
-        const pomodoroMinutes = localStorage.getItem('pomodoroMinutes') || 25;
-        const shortBreakMinutes = localStorage.getItem('shortBreakMinutes') || 5;
-        const longBreakMinutes = localStorage.getItem('longBreakMinutes') || 15;
-        const backgroundColor = localStorage.getItem('backgroundColor') || '#1a1a2e';
-
-        pomodoroMinutesInput.value = pomodoroMinutes;
-        shortBreakMinutesInput.value = shortBreakMinutes;
-        longBreakMinutesInput.value = longBreakMinutes;
-        backgroundColorSelect.value = backgroundColor;
-
-        // Set the timer display to the loaded pomodoro time
-        document.getElementById('timer').textContent = `${pomodoroMinutes}:00`;
-
-        // Set the background color
-        document.body.style.backgroundColor = backgroundColor;
-    }
-
-    function setMode(mode) {
-        // Remove active class from all buttons
-        document.querySelectorAll('.buttons button').forEach(button => button.classList.remove('active'));
-
-        // Add active class to the clicked button
-        if (mode === 'pomodoro') {
-            pomodoroModeButton.classList.add('active');
-            document.getElementById('timer').textContent = `${pomodoroMinutesInput.value}:00`;
-        } else if (mode === 'short-break') {
-            shortBreakModeButton.classList.add('active');
-            document.getElementById('timer').textContent = `${shortBreakMinutesInput.value}:00`;
-        } else if (mode === 'long-break') {
-            longBreakModeButton.classList.add('active');
-            document.getElementById('timer').textContent = `${longBreakMinutesInput.value}:00`;
-        }
-    }
-
-    function updateTimer() {
-        remainingTime--;
-        const minutes = Math.floor(remainingTime / 60);
-        const seconds = remainingTime % 60;
-        document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-        if (remainingTime <= 0) {
-            clearInterval(interval);
-            timerRunning = false;
-            // ここにタイマー終了時の処理を追加することができます
-        }
-    }
-});
+// 初期化
+loadImage(currentIndex);
+startTimer();
