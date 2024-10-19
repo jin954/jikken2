@@ -70,6 +70,10 @@ body {
     margin-bottom: 10px;
 }
 
+.settings-row input[type="number"] {
+    width: 50px; /* 数値入力フィールドを小さくする */
+}
+
 #imageListContainer {
     max-height: 200px;
     overflow-y: auto;
@@ -87,9 +91,13 @@ body {
 .image-item-buttons {
     display: flex;
     justify-content: flex-end; /* 右端に揃える */
+    gap: 0; /* ボタン同士のスペースをなくす */
 }
 
-.image-item-buttons button {
-    margin-left: 0; /* ボタン同士のスペースをなくす */
-    margin-right: 0; /* ボタンと右端のスペースもなくす */
+.timer-settings, .alarm-settings {
+    margin-top: 10px; /* 各セクション間にスペースを追加 */
+}
+
+#uploadImage {
+    margin-bottom: 20px; /* ファイル選択と画像リストの間に余白を追加 */
 }
