@@ -38,7 +38,6 @@ function closeSettings() {
 function saveSettings() {
     alarmTime = document.getElementById("alarmTime").value;
     localStorage.setItem("alarmTime", alarmTime);
-    alert(`毎日 ${alarmTime} に画像が切り替わります`);
     startAlarmCheck();
 
     document.getElementById("saveAlarm").textContent = "設定済み";
