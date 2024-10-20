@@ -74,7 +74,7 @@ body {
 
 .alarm-settings {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* 要素を左揃えにする */
     align-items: center;
 }
 
