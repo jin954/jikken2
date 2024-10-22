@@ -88,7 +88,6 @@ function resetSettings() {
     loadImage(currentIndex);
 }
 
-// 自動的に画像を保存する関数
 function autoSaveImages() {
     const input = document.getElementById('uploadImage');
     const files = input.files;
@@ -97,16 +96,21 @@ function autoSaveImages() {
         for (const file of files) {
             const reader = new FileReader();
             reader.onload = function (e) {
+                // 画像をimages配列に追加
                 images.push({ url: e.target.result });
+                // images配列をlocalStorageに保存
                 localStorage.setItem("images", JSON.stringify(images));
+                // 画像リストを更新してスクロールもリセット
                 updateImageList();
             };
             reader.readAsDataURL(file);
         }
 
+        // ファイル選択後にinputをクリア
         input.value = '';
     }
 }
+
 
 function updateImageList() {
     const imageList = document.getElementById('imageList');
