@@ -109,15 +109,16 @@ function autoSaveImages() {
 }
 
 function updateImageList() {
-    const imageList = document.getElementById("imageList");
-    imageList.innerHTML = "";
+    const imageList = document.getElementById('imageList');
+    imageList.innerHTML = ""; // 既存のリストをクリア
+
     images.forEach((image, index) => {
         const imageItem = document.createElement("div");
         imageItem.classList.add("image-item");
-        
+
         const img = document.createElement("img");
         img.src = image.url;
-        img.width = 50;
+        img.width = 50; // サムネイルサイズ
         img.height = 50;
         imageItem.appendChild(img);
 
@@ -140,8 +141,11 @@ function updateImageList() {
         buttonContainer.appendChild(deleteButton);
 
         imageItem.appendChild(buttonContainer);
-        imageList.appendChild(imageItem);
+        imageList.appendChild(imageItem); // 画像項目をリストに追加
     });
+
+    // スクロール位置をリセット
+    imageList.scrollTop = imageList.scrollHeight;
 }
 
 function moveImageUp(index) {
