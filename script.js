@@ -78,6 +78,14 @@ function autoSaveImages() {
         let fileCount = files.length;
         let loadedCount = 0;
 
+        // 画像の追加制限（例：100個まで登録可能）
+        const maxImageCount = 100;
+        if (images.length + files.length > maxImageCount) {
+            alert(`画像は最大${maxImageCount}枚まで登録できます。`);
+            input.value = ''; // ファイル選択後にクリア
+            return;
+        }
+
         for (const file of files) {
             const reader = new FileReader();
             reader.onload = function (event) {
@@ -87,20 +95,21 @@ function autoSaveImages() {
 
                 // すべての画像が読み込み終わったらリストを更新
                 if (loadedCount === fileCount) {
-                    updateImageList();
+                    updateImageList(); // リアルタイムで反映
                 }
             };
             reader.readAsDataURL(file);
         }
-        input.value = ''; // ファイル選択後にファイル入力をクリア
+        input.value = ''; // ファイル選択後にクリア
     }
 }
 
 function registerImage(imageUrl) {
     images.push({ url: imageUrl });
     localStorage.setItem("images", JSON.stringify(images));
-    updateImageList();
+    updateImageList(); // 画像登録後に即リストを更新
 }
+
 
 function updateImageList() {
     const imageList = document.getElementById('imageList');
