@@ -104,42 +104,44 @@ function registerImage(imageUrl) {
 
 function updateImageList() {
     const imageList = document.getElementById('imageList');
+    imageList.innerHTML = ''; // リストをクリア
 
-    // 既に表示されているリストを維持し、差分だけを更新する
     images.forEach((image, index) => {
-        if (!imageList.children[index]) {
-            const imageItem = document.createElement("div");
-            imageItem.classList.add("image-item");
+        const imageItem = document.createElement("div");
+        imageItem.classList.add("image-item");
 
-            const img = document.createElement("img");
-            img.src = image.url;
-            img.width = 50; // サムネイルサイズ
-            img.height = 50;
-            imageItem.appendChild(img);
+        const img = document.createElement("img");
+        img.src = image.url;
+        img.width = 50; // サムネイルサイズ
+        img.height = 50;
+        imageItem.appendChild(img);
 
-            const buttonContainer = document.createElement("div");
-            buttonContainer.classList.add("image-item-buttons");
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("image-item-buttons");
 
-            const upButton = document.createElement("button");
-            upButton.textContent = "↑";
-            upButton.onclick = () => moveImageUp(index);
-            buttonContainer.appendChild(upButton);
+        const upButton = document.createElement("button");
+        upButton.textContent = "↑";
+        upButton.onclick = () => moveImageUp(index);
+        buttonContainer.appendChild(upButton);
 
-            const downButton = document.createElement("button");
-            downButton.textContent = "↓";
-            downButton.onclick = () => moveImageDown(index);
-            buttonContainer.appendChild(downButton);
+        const downButton = document.createElement("button");
+        downButton.textContent = "↓";
+        downButton.onclick = () => moveImageDown(index);
+        buttonContainer.appendChild(downButton);
 
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "削除";
-            deleteButton.onclick = () => deleteImage(index);
-            buttonContainer.appendChild(deleteButton);
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "削除";
+        deleteButton.onclick = () => {
+            deleteImage(index);
+            updateImageList(); // 削除後にリストを更新
+        };
+        buttonContainer.appendChild(deleteButton);
 
-            imageItem.appendChild(buttonContainer);
-            imageList.appendChild(imageItem); // 画像項目をリストに追加
-        }
+        imageItem.appendChild(buttonContainer);
+        imageList.appendChild(imageItem); // 画像項目をリストに追加
     });
 }
+
 
 function moveImageUp(index) {
     if (index > 0) {
