@@ -23,18 +23,25 @@ body {
 }
 
 .control-buttons {
-    text-align: center;
-    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 50px; /* ボタン間のスペースを調整 */
 }
 
-.triangle-button {
+.triangle-button, .diamond-button {
     cursor: pointer;
-    font-size: 50px;
-    margin: 0 5px;
-    padding: 5px 10px;
-    width: 30px;
-    height: 30px;
+    font-size: 50px; /* ボタンのサイズを統一 */
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px; /* クリック可能範囲をアイコンと同じサイズに調整 */
 }
+
+
 
 .modal {
     display: none;
