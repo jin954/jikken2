@@ -164,7 +164,10 @@ function moveImageDown(index) {
 function deleteImage(index) {
     images.splice(index, 1);
     localStorage.setItem("images", JSON.stringify(images));
-    updateImageList();
+    updateImageList(); // 画像リストの更新
+    currentIndex = Math.min(currentIndex, images.length - 1);
+    localStorage.setItem("currentIndex", currentIndex);
+    loadImage(currentIndex); // 現在の画像を更新
 }
 
 // 時間入力に対するホイール操作を制御
