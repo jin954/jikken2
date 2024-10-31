@@ -7,6 +7,7 @@ let isProcessingQueue = false; // キュー処理中のフラグ
 
 const defaultImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'><rect width='500' height='500' fill='white'/></svg>";
 
+// 画像を圧縮して登録
 function compressImage(imageFile) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -44,6 +45,10 @@ function loadImage(index) {
     const currentImageElement = document.getElementById("currentImage");
     if (images.length > 0) {
         currentImageElement.src = images[index].url;
+        currentImageElement.style.maxWidth = "100%";
+        currentImageElement.style.maxHeight = "100%";
+        currentImageElement.style.objectFit = "contain";
+        currentImageElement.style.backgroundColor = "transparent";
     } else {
         currentImageElement.src = defaultImage;
     }
