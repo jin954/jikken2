@@ -54,7 +54,6 @@ function loadImage(index) {
     }
 }
 
-
 function nextImage() {
     currentIndex = (currentIndex + 1) % (images.length || 1);
     localStorage.setItem("currentIndex", currentIndex);
@@ -270,6 +269,11 @@ window.onload = function () {
 
     if (alarmTime) {
         document.getElementById("alarmTime").value = alarmTime;
-        startAlarmCheck();
+        document.getElementById("saveAlarm").textContent = "設定済み";
+        document.getElementById("saveAlarm").disabled = true;
+        document.getElementById("resetAlarm").style.display = "inline";
+        document.getElementById("alarmTime").disabled = true;
     }
+    
+    startAlarmCheck();
 };
