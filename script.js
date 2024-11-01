@@ -7,7 +7,6 @@ let isProcessingQueue = false; // キュー処理中のフラグ
 
 const defaultImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'><rect width='500' height='500' fill='white'/></svg>";
 
-// 画像を圧縮して登録
 function compressImage(imageFile) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -45,12 +44,8 @@ function loadImage(index) {
     const currentImageElement = document.getElementById("currentImage");
     if (images.length > 0) {
         currentImageElement.src = images[index].url;
-        currentImageElement.style.objectFit = "contain"; // 画像を枠内に収める
-        currentImageElement.style.backgroundColor = "white"; // 背景色を白に設定
     } else {
         currentImageElement.src = defaultImage;
-        currentImageElement.style.objectFit = "contain";
-        currentImageElement.style.backgroundColor = "white";
     }
 }
 
@@ -269,11 +264,6 @@ window.onload = function () {
 
     if (alarmTime) {
         document.getElementById("alarmTime").value = alarmTime;
-        document.getElementById("saveAlarm").textContent = "設定済み";
-        document.getElementById("saveAlarm").disabled = true;
-        document.getElementById("resetAlarm").style.display = "inline";
-        document.getElementById("alarmTime").disabled = true;
+        startAlarmCheck();
     }
-    
-    startAlarmCheck();
 };
