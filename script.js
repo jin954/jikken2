@@ -14,19 +14,27 @@ function compressImage(imageFile) {
             const img = new Image();
             img.onload = function() {
                 const canvas = document.createElement('canvas');
-                canvas.width = 200; // サムネイルの幅
-                canvas.height = 200; // サムネイルの高さ
+                const canvasSize = 1000; // サムネイル解像度を1000pxに設定
+                canvas.width = canvasSize;
+                canvas.height = canvasSize;
                 const ctx = canvas.getContext('2d');
 
                 // 背景を白で塗りつぶす
                 ctx.fillStyle = 'white';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 画像をキャンバスに描画
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                // 画像のアスペクト比を維持しつつ、キャンバスに収める
+                const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                const scaledWidth = img.width * scale;
+                const scaledHeight = img.height * scale;
+                const offsetX = (canvas.width - scaledWidth) / 2;
+                const offsetY = (canvas.height - scaledHeight) / 2;
 
-                // 圧縮した画像データを取得
-                resolve(canvas.toDataURL('image/jpeg', 0.7)); // 圧縮率70%
+                // キャンバスに画像を描画
+                ctx.drawImage(img, 0, 0, img.width, img.height, offsetX, offsetY, scaledWidth, scaledHeight);
+
+                // PNG形式で画像データを取得（非圧縮）
+                resolve(canvas.toDataURL('image/png'));
             };
 
             img.onerror = function() {
@@ -62,8 +70,17 @@ function loadImage(index) {
     const currentImageElement = document.getElementById("currentImage");
     if (images.length > 0) {
         currentImageElement.src = images[index].url;
+        // 画像の表示スタイルを設定
+        currentImageElement.style.width = "100%"; // 親要素に合わせて幅を100%に設定
+        currentImageElement.style.height = "auto"; // 高さは自動調整
+        currentImageElement.style.objectFit = "contain"; // 画像のアスペクト比を維持
+        currentImageElement.style.backgroundColor = "white"; // 背景色を白に設定
     } else {
         currentImageElement.src = defaultImage;
+        currentImageElement.style.width = "100%";
+        currentImageElement.style.height = "auto";
+        currentImageElement.style.objectFit = "contain";
+        currentImageElement.style.backgroundColor = "white";
     }
 }
 
@@ -108,8 +125,9 @@ function startAlarmCheck() {
         const [alarmHours, alarmMinutes] = alarmTime.split(":").map(Number);
         if (now.getHours() === alarmHours && now.getMinutes() === alarmMinutes) {
             nextImage();
-            }
-    }, 60000);
+            resetSettings();
+        }
+    }, 60000); // 1分ごとにチェック
 }
 
 function resetSettings() {
@@ -281,6 +299,12 @@ window.onload = function () {
 
     if (alarmTime) {
         document.getElementById("alarmTime").value = alarmTime;
+        document.getElementById("saveAlarm").textContent = "設定済み";
+        document.getElementById("saveAlarm").disabled = true;
+        document.getElementById("resetAlarm").style.display = "inline";
+        document.getElementById("alarmTime").disabled = true;
         startAlarmCheck();
+    } else {
+        document.getElementById("resetAlarm").style.display = "none";
     }
 };
