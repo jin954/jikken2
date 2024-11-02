@@ -8,7 +8,8 @@ body {
 
 .image-container {
     border: 2px solid black;
-    width: 700px;
+    width: 100%; /* 幅を100%に変更 */
+    max-width: 700px; /* 最大幅を700pxに設定 */
     height: 500px;
     margin: 20px auto;
     position: relative;
@@ -40,8 +41,6 @@ body {
     width: 60px;
     height: 60px; /* クリック可能範囲をアイコンと同じサイズに調整 */
 }
-
-
 
 .modal {
     display: none;
